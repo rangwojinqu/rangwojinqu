@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script>
+        var farmName = [[${farmName}]];
+
+        //定义方法
+        function  fun() {
+            $.ajax({
+                url:"/testPageHelper2" , // 请求路径
+                type:"post" , //请求方式
+                //data: "username=jack&age=23",//请求参数
+                success:function (json) {
+                        var tableDom = $('table');
+                        var html ="<tr class='title'> <td>账户id</td><td>账户名称</td><td>账户金额</td>  </tr>";
+                        //下面使用each进行遍历
+                        $.each(json,function(i,item) {
+                          //  alert(item.id+''+item.name+''+item.money);
+                            var trs = "";
+                            trs += "<tr><td>"+item.id+"</td><td>" + item.name +"</td><td>" + item.money +"</td></tr>";
+                            html += trs;
+                        });
+                        tableDom.html(html);
+                      //  alert(JSON.stringify(json));
+                },//响应成功后的回调函数
+                error:function () {
+                    alert("出错啦...")
+                },//表示如果请求响应出现错误，会执行的回调函数
+                dataType:"json",//设置接受到的响应数据的格式
+            });
+        }
+    </script>
+<style>
+
+    button {
+        background-color: #4CAF50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+<button  onclick="fun()"  >按钮</button>
+        <h1>展示账户数据列表</h1>
+        <table border="1">
+<!--            <tr>
+                <th>账户id</th>
+                <th>账户名称</th>
+                <th>账户金额</th>
+            </tr>-->
+</body>
+</html>
